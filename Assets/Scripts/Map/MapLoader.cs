@@ -33,11 +33,14 @@ public class MapLoader : MonoBehaviour
 
     private IEnumerator LoadSequence()
     {
+        int i = 1;
         foreach(MapChunkGenerator c in chunks)
         {
             c.gameObject.SetActive(true);
 
-            c.StartLoad();
+            c.StartLoad(i);
+
+            i++;
             yield return new WaitForSeconds(0.1f);
         }
     }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Collections;
 using UnityEngine;
 
 public class MapChunkGenerator : MonoBehaviour
@@ -17,12 +18,12 @@ public class MapChunkGenerator : MonoBehaviour
         
     }
 
-    public void StartLoad()
+    public void StartLoad(int index)
     {
-        StartCoroutine(Generate());
+        StartCoroutine(Generate(index));
     }
 
-    private IEnumerator Generate()
+    private IEnumerator Generate(int index)
     {
         for(int i = 0; i < chunkSize.x; i++)
         {
@@ -35,6 +36,9 @@ public class MapChunkGenerator : MonoBehaviour
                 t.transform.position = pos;
                 t.transform.rotation = Quaternion.identity;
 
+                t.GetComponent<Tile>().info.Set(i, j, index);
+
+                LoadTextUpdater.Instance.UpdateUI("generating tile: x" + i + " y:" + j + "(" + index + ")");
                 yield return null;
             }
         }
