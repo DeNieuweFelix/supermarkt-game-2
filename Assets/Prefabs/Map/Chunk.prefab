@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2534125759492623209}
+  - component: {fileID: 8692622132686666858}
   - component: {fileID: 1111166477674950338}
   - component: {fileID: 5718640412979927401}
   - component: {fileID: 9197809818828360516}
-  - component: {fileID: 8692622132686666858}
   m_Layer: 0
   m_Name: Chunk
   m_TagString: Chunk
@@ -35,6 +35,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8692622132686666858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4907988998541352157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2129c9ca6704fdb428194df527f28c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapChunkGenerator
+  tile: {fileID: 7184159541112191055, guid: 4cdce5a2c573c8a43a744497d3e3b46b, type: 3}
+  chunkSize: {x: 5, y: 5}
+  tileTypes:
+  - {fileID: 11400000, guid: 8d6e4b78b55b2ff43828beb1ce5cf235, type: 2}
+  - {fileID: 11400000, guid: 7c008bcedc564564980c5a5177a19438, type: 2}
 --- !u!33 &1111166477674950338
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -68,7 +85,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: f4c9d36960e2f304c9d84d28702a1038, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,17 +131,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &8692622132686666858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4907988998541352157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2129c9ca6704fdb428194df527f28c93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapChunkGenerator
-  tile: {fileID: 7184159541112191055, guid: 4cdce5a2c573c8a43a744497d3e3b46b, type: 3}
-  chunkSize: {x: 5, y: 5}

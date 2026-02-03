@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class MapChunkGenerator : MonoBehaviour
 {
     public GameObject tile;
     public Vector2 chunkSize;
+    public List<TileType> tileTypes = new List<TileType>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,10 +27,29 @@ public class MapChunkGenerator : MonoBehaviour
 
     private IEnumerator Generate(int index)
     {
+        int typeSize = 0;
+        int sizeLeft = 0;
+        TileType type = null;
+
         for(int i = 0; i < chunkSize.x; i++)
         {
             for(int j = 0; j < chunkSize.y; j++)
             {
+                if(type == null)
+                {
+                    if(Random.Range(0, 10) > 5)
+                    {
+                        type = tileTypes[Random.Range(1, tileTypes.Count)];
+                    }
+                    else
+                    {
+                        type = tileTypes[0];
+                    }
+
+                    typeSize = type.maxSize;
+                    sizeLeft = type.maxSize;
+                }
+
                 GameObject t = Instantiate(tile, transform, true);
 
                 Vector3 pos = transform.position - new Vector3(20f, 0f, 20f) + (new Vector3(i, 0f, j) * 10f);
@@ -36,7 +57,16 @@ public class MapChunkGenerator : MonoBehaviour
                 t.transform.position = pos;
                 t.transform.rotation = Quaternion.identity;
 
-                t.GetComponent<Tile>().info.Set(i, j, index);
+                Tile tTile = t.GetComponent<Tile>(); 
+                tTile.info.Set(i, j, index, type);
+
+                tTile.Init();
+
+                sizeLeft--;
+                if(Random.Range(0, typeSize) > sizeLeft)
+                {
+                    type = null;
+                }
 
                 LoadTextUpdater.Instance.UpdateUI("generating tile: x" + i + " y:" + j + "(" + index + ")");
                 yield return null;
@@ -44,3 +74,4 @@ public class MapChunkGenerator : MonoBehaviour
         }
     }
 }
+

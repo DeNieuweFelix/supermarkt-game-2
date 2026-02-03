@@ -16,7 +16,7 @@ public class PlayerTileGetter : MonoBehaviour
     void Update()
     {
         // TileGOBlookingAt = 
-        if(Physics.Raycast(transform.position, cameraGOB.transform.rotation.ToEulerAngles(), out hit, 1000f, tileLayer))
+        if(Physics.Raycast(cameraGOB.transform.position, cameraGOB.transform.rotation.ToEulerAngles(), out hit, 1000f, tileLayer))
         {
             TileGOBlookingAt = hit.collider.gameObject;
             TileGOBlookingAt.GetComponent<Tile>().Select();

@@ -33,6 +33,8 @@ public class MapLoader : MonoBehaviour
 
     private IEnumerator LoadSequence()
     {
+        yield return new WaitForSeconds(0.1f);
+        
         int i = 1;
         foreach(MapChunkGenerator c in chunks)
         {
