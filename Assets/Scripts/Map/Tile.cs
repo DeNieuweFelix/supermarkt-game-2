@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -7,6 +9,8 @@ public class Tile : MonoBehaviour
     public Material SelectedMaterial;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private GameObject tileBase;
+    private bool eroded = false;
+    private static Collider[] overlapResults = new Collider[64];
     
 
     public bool selected = false;
@@ -47,6 +51,32 @@ public class Tile : MonoBehaviour
 
         tileBase.transform.rotation = Quaternion.Euler(0f, TileBaseRot, 0f);
     }
+
+    public void Erosion(int strength)
+    {
+        if (eroded || strength <= 0) return;
+        eroded = true;
+
+        int count = Physics.OverlapBoxNonAlloc(
+            transform.position,
+            Vector3.one * 8f,
+            overlapResults
+        );
+
+        for (int i = 0; i < count; i++)
+        {
+            Tile tile = overlapResults[i].GetComponent<Tile>();
+            if (tile == null || tile == this) continue;
+
+            tile.Erosion(strength - 1);
+        }
+
+        if (Random.value < strength / 10f)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }
 
 [System.Serializable]

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49d03a27af83c9a40b43431ce5caec56, type: 3}
-  m_Name: Desert
+  m_Name: Rock
   m_EditorClassIdentifier: Assembly-CSharp::TileType
-  name: Desert
-  tileMaterial: {fileID: 2100000, guid: 025ca9166249ea741955869b2f53d771, type: 2}
-  maxSize: 30
+  name: Rock
+  tileMaterial: {fileID: 2100000, guid: 2f2aff35bc37ad846a28d872f06448ef, type: 2}
+  maxSize: 20
