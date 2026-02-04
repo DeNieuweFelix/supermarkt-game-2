@@ -11,6 +11,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private GameObject tileBase;
     private bool eroded = false;
     private static Collider[] overlapResults = new Collider[64];
+    public bool wasCheckedByPathGenerator = false;
     
 
     public bool selected = false;

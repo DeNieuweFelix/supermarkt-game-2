@@ -76,7 +76,7 @@ public class MapLoader : MonoBehaviour
         foreach(MapChunkGenerator c in chunks)
         {
             c.gameObject.SetActive(true);
-
+            c.gameObject.name = "c_" + i;
             c.StartLoad(i);
 
             i++;
@@ -85,5 +85,9 @@ public class MapLoader : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         StartCoroutine(StartErosion());
+
+        yield return new WaitForSeconds(0.2f);
+
+        EnemyPathGenerator.Instance.Generate();
     }
 }

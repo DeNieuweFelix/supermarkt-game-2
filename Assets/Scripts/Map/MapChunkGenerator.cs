@@ -31,6 +31,8 @@ public class MapChunkGenerator : MonoBehaviour
         int sizeLeft = 0;
         TileType type = null;
 
+        float heightOffset = Random.Range(0f, 0.75f);
+
         if(MapLoader.Instance.lastChunkFinalType != null)
         {
             type = MapLoader.Instance.lastChunkFinalType;
@@ -62,9 +64,11 @@ public class MapChunkGenerator : MonoBehaviour
                     sizeLeft = type.maxSize;
                 }
 
+                heightOffset = Mathf.Clamp(heightOffset + Random.Range(-0.6f, 0.6f), 0f, 6.5f);
+
                 GameObject t = Instantiate(tile, transform, true);
 
-                Vector3 pos = transform.position - new Vector3(20f, -2f, 20f) + (new Vector3(i, 0f, j) * 10f);
+                Vector3 pos = transform.position - new Vector3(20f, -(2f + heightOffset) , 20f) + (new Vector3(i, 0f, j) * 10f);
 
                 t.transform.position = pos;
                 t.transform.rotation = Quaternion.identity;
