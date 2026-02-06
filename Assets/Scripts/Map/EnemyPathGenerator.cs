@@ -9,12 +9,15 @@ public class EnemyPathGenerator : MonoBehaviour
     public static EnemyPathGenerator Instance;
     [SerializeField] private GameObject startChunk;
     [SerializeField] private GameObject startTile;
+    [SerializeField] private int minLength = 100;
 
     [SerializeField] private GameObject enemyPath;
     [SerializeField] private Transform pathTransform ;
     [SerializeField] private LayerMask tileLayer;
     [SerializeField] private EnemyPathRenderer enemyPathRenderer;
     [SerializeField] private bool hasFoundStartingPoint = false;
+
+    [SerializeField] private int[] previousWay = new int[2];
 
     void Awake()
     {
@@ -64,15 +67,20 @@ public class EnemyPathGenerator : MonoBehaviour
 
     private IEnumerator LayPath()
     {
+
         int zWay = 0;
         int xWay = 1;
+        int rot = 0;
 
         int misses = 0;
+        Vector3 lastValidPos = new Vector3();
+
+        int length = 0;
 
         List<Vector3> enemyPathTransforms = new List<Vector3>();
 
         RaycastHit hit;
-        while (misses < 50)
+        while (length < minLength)
         {
 
             pathTransform.position += new Vector3(xWay, 0f, zWay);
@@ -98,39 +106,69 @@ public class EnemyPathGenerator : MonoBehaviour
                 Vector3 pos;
                 pos = hit.collider.gameObject.transform.position;
 
-                Instantiate(enemyPath, pos, Quaternion.identity);
+                lastValidPos = pos;
+
+                Instantiate(enemyPath, pos, Quaternion.Euler(0f, rot, 0f));
                 enemyPathTransforms.Add(pathTransform.position);
 
                 thisTile.wasCheckedByPathGenerator = true;
 
-                if (hasFoundStartingPoint)
+                if (hasFoundStartingPoint && UnityEngine.Random.Range(0,10) > 3)
                 {
+                    new_way:
+
                     int way = UnityEngine.Random.Range(0, 100);
 
                     if(way < 20)
                     {
                         zWay = 0;
                         xWay = 1;
+                        rot = 180;
+                        
                     }else if(way < 40)
                     {
                         zWay = 0;
                         xWay = -1;
+                        rot = 0;
                     }
                     else
                     {
                         zWay = 1;
                         xWay = 0;
+                        rot = -90;
                     }
+
+                    if(zWay == previousWay[0] && xWay == previousWay[1])
+                    {
+                        Debug.Log("same direction found!");
+
+                        yield return new WaitForFixedUpdate();
+                        goto new_way;
+                    }
+
+                    previousWay[0] = zWay;
+                    previousWay[1] = xWay;
                 }
 
                 misses = 0;
+
+                length++;
+                Debug.Log("current path length: " + length);
             }
             else
             {
                 misses++;
+
+                if (misses >= 50)
+                {
+                    pathTransform.position = lastValidPos + Vector3.up * 5f;
+                    zWay = -zWay;
+                    xWay = -xWay;
+                    misses = 0;
+                }
             }
 
-            Debug.Log("path generator misses: " + misses);
+            // Debug.Log("path generator misses: " + misses);
             yield return new WaitForFixedUpdate();
         }
 
