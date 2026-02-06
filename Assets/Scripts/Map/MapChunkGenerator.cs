@@ -74,7 +74,7 @@ public class MapChunkGenerator : MonoBehaviour
                 t.transform.rotation = Quaternion.identity;
 
                 Tile tTile = t.GetComponent<Tile>(); 
-                tTile.info.Set(i, j, index, type);
+                tTile.info.Set(i, j, index, type, heightOffset);
 
                 tTile.Init();
 

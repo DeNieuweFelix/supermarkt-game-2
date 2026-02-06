@@ -109,7 +109,7 @@ public class EnemyPathGenerator : MonoBehaviour
                 lastValidPos = pos;
 
                 Instantiate(enemyPath, pos, Quaternion.Euler(0f, rot, 0f));
-                enemyPathTransforms.Add(pathTransform.position);
+                enemyPathTransforms.Add(pos + Vector3.up * (thisTile.info.yOffset + 1));
 
                 thisTile.wasCheckedByPathGenerator = true;
 

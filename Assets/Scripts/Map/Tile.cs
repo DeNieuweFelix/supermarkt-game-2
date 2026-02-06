@@ -87,11 +87,13 @@ public class TileInfo
     public int y;
     public int c;
     public TileType thisType;
-    public void Set(int sx, int sy, int sc, TileType tt)
+    public float yOffset;
+    public void Set(int sx, int sy, int sc, TileType tt, float yO)
     {
         x = sx;
         y = sy;
         c = sc;
         thisType = tt;
+        yOffset = yO;
     }
 }
