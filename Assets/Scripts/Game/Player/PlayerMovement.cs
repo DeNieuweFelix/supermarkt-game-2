@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
             
             TimeMoving +=  1f * Time.deltaTime;
 
-            if(TimeMoving > 2f)
+            if(TimeMoving > 0.5f)
             {
                 transform.Translate(dir * Time.deltaTime * (10f + (Mathf.Clamp(TimeMoving, 0f, 10f) - 2f) * 3f));
             }

@@ -22,6 +22,12 @@ public class Tile : MonoBehaviour
         meshRenderer.material = SelectedMaterial;
     }
 
+    public void Deselect()
+    {
+        selected = false;
+        meshRenderer.material = DefaultMaterial;
+    }
+
     public void Init()
     {
         tileBase.GetComponent<MeshRenderer>().material = info.thisType.tileMaterial;

@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "supermarkt-game-2.slnx"
+    "dotnet.defaultSolution": "supermarket-stuff.slnx"
 }

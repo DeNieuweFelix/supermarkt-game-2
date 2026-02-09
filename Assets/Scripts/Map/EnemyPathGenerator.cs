@@ -67,6 +67,7 @@ public class EnemyPathGenerator : MonoBehaviour
 
     private IEnumerator LayPath()
     {
+        GameObject PathHolder = new GameObject("PathHolder");
 
         int zWay = 0;
         int xWay = 1;
@@ -108,7 +109,9 @@ public class EnemyPathGenerator : MonoBehaviour
 
                 lastValidPos = pos;
 
-                Instantiate(enemyPath, pos, Quaternion.Euler(0f, rot, 0f));
+                GameObject thisPath = Instantiate(enemyPath, pos, Quaternion.Euler(0f, rot, 0f));
+                thisPath.transform.SetParent(PathHolder.transform);
+
                 enemyPathTransforms.Add(pos + Vector3.up * (thisTile.info.yOffset + 1));
 
                 thisTile.wasCheckedByPathGenerator = true;
@@ -169,7 +172,7 @@ public class EnemyPathGenerator : MonoBehaviour
             }
 
             // Debug.Log("path generator misses: " + misses);
-            yield return new WaitForFixedUpdate();
+            // yield return new WaitForFixedUpdate();
         }
 
         enemyPathRenderer.RendererSetup(enemyPathTransforms);
