@@ -14,8 +14,23 @@ public class Building : ScriptableObject
 
     public string name;
     public GameObject model;
+    public Sprite icon;
     public Types type;
-    public List<p_Material> materialsProduce = new List<p_Material>();
-    public List<p_Material> materialsCost = new List<p_Material>();
+    public List<MaterialProduce> materialsProduce = new List<MaterialProduce>();
+    public List<MaterialCost> materialsCosts = new List<MaterialCost>();
+}
+
+[System.Serializable]
+public class MaterialProduce
+{
+    public p_Material material;
+    public int amount;
+    public int delay;
+}
+[System.Serializable]
+public class MaterialCost
+{
+    public p_Material material;
+    public int cost;
 }
 

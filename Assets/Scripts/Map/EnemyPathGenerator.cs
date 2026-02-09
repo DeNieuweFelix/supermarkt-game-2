@@ -172,7 +172,7 @@ public class EnemyPathGenerator : MonoBehaviour
             }
 
             // Debug.Log("path generator misses: " + misses);
-            // yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
         }
 
         enemyPathRenderer.RendererSetup(enemyPathTransforms);
