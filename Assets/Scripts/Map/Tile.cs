@@ -28,6 +28,11 @@ public class Tile : MonoBehaviour
         meshRenderer.material = DefaultMaterial;
     }
 
+    public void BuildOn()
+    {
+        meshRenderer.enabled = false;
+    }
+
     public void Init()
     {
         tileBase.GetComponent<MeshRenderer>().material = info.thisType.tileMaterial;

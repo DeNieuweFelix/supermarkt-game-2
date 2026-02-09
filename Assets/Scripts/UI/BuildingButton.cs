@@ -21,7 +21,9 @@ public class BuildingButton : MonoBehaviour
 
         GameObject b = Instantiate(building.model);
 
-        b.transform.position = tileGOB.transform.position;
+        b.transform.position = tileGOB.transform.position + Vector3.up * tileToBuildOn.info.yOffset;
         b.transform.SetParent(tileGOB.transform);
+
+        tileToBuildOn.BuildOn();
     }
 }

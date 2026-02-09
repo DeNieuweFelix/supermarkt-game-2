@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NormalHouse
   m_EditorClassIdentifier: Assembly-CSharp::Building
   name: House
-  model: {fileID: 9149029133505813854, guid: b62df42974c90274499a5039d5352741, type: 3}
+  model: {fileID: 6715033215522403856, guid: bb7924495dfb2de45b9b6c8d5ea91d38, type: 3}
   icon: {fileID: 21300000, guid: 9cc6d7770d1cc7b42a16f8c2dce547af, type: 3}
   type: 0
   materialsProduce:
