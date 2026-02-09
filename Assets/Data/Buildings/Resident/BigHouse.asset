@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BigHouse
   m_EditorClassIdentifier: Assembly-CSharp::Building
   name: Big House
-  model: {fileID: 9149029133505813854, guid: b62df42974c90274499a5039d5352741, type: 3}
+  model: {fileID: 7726667515132013054, guid: 61b24870849baf049ae919cd89396477, type: 3}
   icon: {fileID: 21300000, guid: e35089ecbf71df94bb952a2051837e1d, type: 3}
   type: 0
   materialsProduce: []

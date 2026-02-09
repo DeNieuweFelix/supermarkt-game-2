@@ -25,5 +25,28 @@ public class BuildingButton : MonoBehaviour
         b.transform.SetParent(tileGOB.transform);
 
         tileToBuildOn.BuildOn();
+
+        if(building.type == Building.Types.Residential)
+        {
+            int rot;
+            int ran = Random.Range(0, 100);
+
+            if(ran > 75)
+            {
+                rot = 0;
+            }else if(ran > 50)
+            {
+                rot = 90;
+            }else if(ran > 25)
+            {
+                rot = 0;
+            }
+            else
+            {
+                rot = -90;
+            }
+
+            b.transform.localRotation = Quaternion.Euler(0f, rot, 0f);
+        }
     }
 }
