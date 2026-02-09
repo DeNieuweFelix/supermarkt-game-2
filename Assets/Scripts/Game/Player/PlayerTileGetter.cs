@@ -2,12 +2,30 @@ using UnityEngine;
 
 public class PlayerTileGetter : MonoBehaviour
 {
+    public static PlayerTileGetter Instance;
+
+    void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+    
     public GameObject TileGOBlookingAt;
     [SerializeField] private GameObject cameraGOB;
     [SerializeField] private LayerMask tileLayer;
     [SerializeField] private SetTileInfoUI tileInfoUI;
     private RaycastHit hit;
     private RaycastHit oldHit;
+
+    public bool isTileSelected = false;
+    public Tile tileSelected;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,6 +39,8 @@ public class PlayerTileGetter : MonoBehaviour
         // TileGOBlookingAt = 
         if(Physics.Raycast(ray, out hit, 1000f, tileLayer))
         {
+            isTileSelected = true;
+
             if((oldHit.collider == hit.collider) && oldHit.collider != null && hit.collider != null) return;
             else if(oldHit.collider != null)
             {
@@ -32,6 +52,8 @@ public class PlayerTileGetter : MonoBehaviour
 
             Tile TileLookingAt = TileGOBlookingAt.GetComponent<Tile>();
             TileLookingAt.Select();
+
+            tileSelected = TileLookingAt;
 
             tileInfoUI.SetInfo(TileLookingAt);
             oldHit = hit;

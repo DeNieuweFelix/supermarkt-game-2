@@ -4,5 +4,5 @@ using UnityEngine;
 public class p_Material : ScriptableObject
 {
     public string name;
-    public Material material;
+
 }
