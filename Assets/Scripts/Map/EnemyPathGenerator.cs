@@ -122,7 +122,7 @@ public class EnemyPathGenerator : MonoBehaviour
 
                     int way = UnityEngine.Random.Range(0, 100);
 
-                    if(way < 20)
+                    if(way < 20 || zWay != 0)
                     {
                         zWay = 0;
                         xWay = 1;

@@ -21,7 +21,7 @@ public class BuildingButton : MonoBehaviour
 
         GameObject b = Instantiate(building.model);
 
-        b.transform.position = tileGOB.transform.position + Vector3.up * tileToBuildOn.info.yOffset;
+        b.transform.position = tileGOB.transform.position + Vector3.up * (tileToBuildOn.info.yOffset / 10f);
         b.transform.SetParent(tileGOB.transform);
 
         tileToBuildOn.BuildOn();
@@ -48,5 +48,8 @@ public class BuildingButton : MonoBehaviour
 
             b.transform.localRotation = Quaternion.Euler(0f, rot, 0f);
         }
+
+        BuildingScript buildingScript = b.AddComponent<BuildingScript>();
+        buildingScript.thisBuilding = building;
     }
 }

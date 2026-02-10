@@ -18,6 +18,9 @@ public class Building : ScriptableObject
     public Types type;
     public List<MaterialProduce> materialsProduce = new List<MaterialProduce>();
     public List<MaterialCost> materialsCosts = new List<MaterialCost>();
+
+    [Header("For residential buildings:")]
+    public int personCapacity;
 }
 
 [System.Serializable]

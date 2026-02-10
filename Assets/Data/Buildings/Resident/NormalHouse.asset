@@ -24,3 +24,4 @@ MonoBehaviour:
     amount: 0
     delay: 0
   materialsCosts: []
+  personCapacity: 20

@@ -18,3 +18,4 @@ MonoBehaviour:
   type: 0
   materialsProduce: []
   materialsCosts: []
+  personCapacity: 250
