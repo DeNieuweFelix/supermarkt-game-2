@@ -8,16 +8,18 @@ public class SkyscraperFX : MonoBehaviour
     void Start()
     {
         StartCoroutine(LightBlink());
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
         foreach(GameObject g in Lights)
         {
             g.SetActive(false);
         }
     }
+
+    // // Update is called once per frame
+    // void Update()
+    // {
+
+    // }
 
     private IEnumerator LightBlink()
     {
@@ -25,16 +27,29 @@ public class SkyscraperFX : MonoBehaviour
 
         while (true)
         {
-            if(Random.Range(0, 30) > 25)
+            
+            if(Random.Range(0, 30) > 25 && (
+                DayNightCycle.Instance.currentTime == DayNightCycle.Times.Night ||
+                DayNightCycle.Instance.currentTime == DayNightCycle.Times.Evening
+                )
+            )
             {
                 GameObject lightActivated = Lights[Random.Range(0, Lights.Length)];
                 lightActivated.SetActive(true);
 
-                float delay = Random.Range(0.7f, 2f);
+                float delay = Random.Range(0.15f, 1.15f);
 
                 yield return new WaitForSeconds(delay);
                 lightActivated.SetActive(false);
             }
+            else
+            {
+                foreach(GameObject l in Lights)
+                {
+                    l.SetActive(false);
+                }    
+            }
+
             yield return new WaitForSeconds(2f);
         }
     }
