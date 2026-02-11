@@ -88,11 +88,11 @@ public class EnemyPathGenerator : MonoBehaviour
 
             if(Physics.Raycast(pathTransform.position, Vector3.down, out hit,  999f, tileLayer))
             {
-                if(UnityEngine.Random.Range(0, 10) > 6)
+                if(UnityEngine.Random.Range(0, 10) > 6 && !hasFoundStartingPoint)
                 {
                     hasFoundStartingPoint = true;
                 }
-                else
+                else if(!hasFoundStartingPoint)
                 {
                     continue;
                 }
@@ -101,7 +101,7 @@ public class EnemyPathGenerator : MonoBehaviour
 
                 if (thisTile.wasCheckedByPathGenerator)
                 {
-                    continue;
+                    xWay = -xWay;
                 }
 
                 Vector3 pos;
@@ -162,10 +162,10 @@ public class EnemyPathGenerator : MonoBehaviour
             {
                 misses++;
 
-                if (misses >= 50)
+                if (misses >= 100)
                 {
-                    pathTransform.position = lastValidPos + Vector3.up * 5f;
-                    zWay = -zWay;
+                    pathTransform.position = lastValidPos + Vector3.forward;
+                    zWay = 1;
                     xWay = -xWay;
                     misses = 0;
                 }
@@ -176,5 +176,8 @@ public class EnemyPathGenerator : MonoBehaviour
         }
 
         enemyPathRenderer.RendererSetup(enemyPathTransforms);
+
+        //only for testing!!!!!!!!
+        EnemySpawner.Instance.SpawnEnemies(enemyPathTransforms);
     }
 }
