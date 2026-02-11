@@ -1,9 +1,25 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class DayNightCycle : MonoBehaviour
 {
+    public static DayNightCycle Instance;
+
+    void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
     [Range(0, 2400)]
     public int time = 0;
     public Times currentTime;
@@ -13,6 +29,9 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private Light SunLight;
     [SerializeField] private Color targetColor;
     [SerializeField] private float colorChangeSpeed = 3f;
+
+    [SerializeField] private VolumeProfile[] TimeProfiles = new VolumeProfile[4];
+    [SerializeField] private Volume TimeVolume;
 
     public enum Times
     {
@@ -72,6 +91,23 @@ public class DayNightCycle : MonoBehaviour
             currentTime = Times.Evening;
         }
 
-        targetColor = timeColors[((int)currentTime / 600) - 1];
+        int timeIndex = 0;
+
+        switch (currentTime)
+        {
+            case Times.Morning: timeIndex = 0; break;
+            case Times.Day: timeIndex = 1; break;
+            case Times.Evening: timeIndex = 2; break;
+            case Times.Night: timeIndex = 3; break;
+        }
+
+        Debug.Log(timeIndex);
+
+        targetColor = timeColors[timeIndex];
+        
+        if (TimeVolume.profile != TimeProfiles[timeIndex])
+        {
+            TimeVolume.profile = TimeProfiles[timeIndex];
+        }
     }
 }
