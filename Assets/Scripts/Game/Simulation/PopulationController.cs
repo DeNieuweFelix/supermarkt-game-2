@@ -22,6 +22,8 @@ public class PopulationController : MonoBehaviour
                 //add more if there's a lot of buildings
                 toAdd += Mathf.FloorToInt((GameManager.Instance.stats.MaxResidents - GameManager.Instance.stats.CurrentResidents) / 75);
 
+                MainResourceUpdater.Instance.UpdatePopulationColor(toAdd);
+
                 GameManager.Instance.stats.CurrentResidents = Mathf.Clamp(
                     GameManager.Instance.stats.CurrentResidents + toAdd,
                     0,
