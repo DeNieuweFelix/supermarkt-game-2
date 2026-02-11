@@ -12,6 +12,8 @@ public class Tile : MonoBehaviour
     private bool eroded = false;
     private static Collider[] overlapResults = new Collider[64];
     public bool wasCheckedByPathGenerator = false;
+
+    public bool hasBeenBuiltOn = false;
     
 
     public bool selected = false;
@@ -31,6 +33,7 @@ public class Tile : MonoBehaviour
     public void BuildOn()
     {
         meshRenderer.enabled = false;
+        hasBeenBuiltOn = true;
     }
 
     public void Init()

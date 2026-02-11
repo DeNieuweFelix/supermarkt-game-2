@@ -16,6 +16,12 @@ public class BuildingButton : MonoBehaviour
     {
         Tile tileToBuildOn = PlayerTileGetter.Instance.tileSelected;
 
+        if (tileToBuildOn.hasBeenBuiltOn)
+        {
+            Debug.LogWarning("has been built on already!");
+            return;
+        }
+
         Debug.Log("attempting to build tile on: x" + tileToBuildOn.info.x + " y: " + tileToBuildOn.info.y);
         GameObject tileGOB = tileToBuildOn.gameObject;
 
