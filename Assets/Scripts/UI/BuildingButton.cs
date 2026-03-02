@@ -58,4 +58,10 @@ public class BuildingButton : MonoBehaviour
         BuildingScript buildingScript = b.AddComponent<BuildingScript>();
         buildingScript.thisBuilding = building;
     }
+
+    public void SetPreview()
+    {
+        Debug.Log(building);
+        BuildingPreviewManager.Instance.SetBuildingPreview(building);
+    }
 }
