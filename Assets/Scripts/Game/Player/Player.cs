@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     {
         foreach(MaterialOwned o in playerStats.MaterialsOwned)
         {
-            o.amount = 99999;
+            o.amount = 100;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,10 +23,11 @@ public class MainResourceUpdater : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI populationDisplay;
     [SerializeField] private Image populationImage;
+    public List<ResourceText> allResourceText = new List<ResourceText>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        StartCoroutine(AutoUpdate());
     }
 
     // Update is called once per frame
@@ -79,5 +81,40 @@ public class MainResourceUpdater : MonoBehaviour
                 way = 1;
             }
         }
+    }
+
+    private IEnumerator AutoUpdate()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            UpdateAllResources();
+        }
+    }
+
+    public void UpdateAllResources()
+    {
+        //returns if the instance isnt loaded yet
+        if(Player.Instance.playerStats == null) return;
+        if(allResourceText.Count == 0) return;
+
+        foreach(MaterialOwned mO in Player.Instance.playerStats.MaterialsOwned)
+        {
+            p_Material m = mO.material;
+            ResourceText rT = allResourceText.Find(x => x.name == m.name);
+
+            rT.UpdateT(mO.amount);
+        }
+    }
+}
+
+[System.Serializable]
+public class ResourceText
+{
+    public string name;
+    public TextMeshProUGUI textHolder;
+    //float just te be sure (make sure to convert it when calling)
+    public void UpdateT(float amount){
+        textHolder.text = amount.ToString();
     }
 }

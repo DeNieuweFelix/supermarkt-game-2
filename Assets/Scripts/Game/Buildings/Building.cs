@@ -15,6 +15,16 @@ public class BuildingScript : MonoBehaviour
         {
             GameManager.Instance.stats.MaxResidents += thisBuilding.personCapacity;
         }
+
+        StartCoroutine(BuildingTicker());
+    }
+
+    private IEnumerator BuildingTicker()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+        }
     }
 
     // Update is called once per frame

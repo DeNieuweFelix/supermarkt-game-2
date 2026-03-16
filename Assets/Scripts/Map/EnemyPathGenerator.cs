@@ -19,6 +19,9 @@ public class EnemyPathGenerator : MonoBehaviour
 
     [SerializeField] private int[] previousWay = new int[2];
 
+    //new variables
+    [SerializeField] private List<PossiblePath> allPaths = new List<PossiblePath>();
+
     void Awake()
     {
         if(Instance == null)
@@ -42,142 +45,232 @@ public class EnemyPathGenerator : MonoBehaviour
     {
         
     }
-
+    //decided to try something else, since this method was very unbalanced
+    //NEW VERSION!!!
     public void Generate()
     {
-        GameObject[] allChunks = GameObject.FindGameObjectsWithTag("Chunk");
-        startChunk = allChunks.ToList().Find(x => x.transform.position.z < 0f);
+        PossiblePath chosenPath = allPaths[UnityEngine.Random.Range(
+            0, allPaths.Count
+        )];
 
-        foreach(Transform t in startChunk.transform)
-        {
-            Tile tile = t.gameObject.GetComponent<Tile>();
-            if(tile != null && (tile.info.x == 0 && tile.info.y == 0))
-            {
-                startTile = t.gameObject;
-                break;
-            }
-        }
+        StartCoroutine(WalkPath(chosenPath));
+        
 
-        pathTransform.position = startTile.transform.position + (Vector3.up * 5f);
-
-        Debug.Log("start tile found!");
-
-        StartCoroutine(LayPath());
     }
 
-    private IEnumerator LayPath()
+    private IEnumerator WalkPath(PossiblePath path)
     {
-        GameObject PathHolder = new GameObject("PathHolder");
-
-        int zWay = 0;
-        int xWay = 1;
-        int rot = 0;
-
-        int misses = 0;
-        Vector3 lastValidPos = new Vector3();
-
-        int length = 0;
-
+        pathTransform.position = path.PathPoints[0].position;
         List<Vector3> enemyPathTransforms = new List<Vector3>();
 
-        RaycastHit hit;
-        while (length < minLength)
+        foreach (Transform t in path.PathPoints)
         {
-
-            pathTransform.position += new Vector3(xWay, 0f, zWay);
-
-            if(Physics.Raycast(pathTransform.position, Vector3.down, out hit,  999f, tileLayer))
+            while (pathTransform.position != t.position)
             {
-                if(UnityEngine.Random.Range(0, 10) > 6 && !hasFoundStartingPoint)
+                pathTransform.position = Vector3.MoveTowards(
+                    pathTransform.position,
+                    t.position,
+                    1f
+                );
+
+                Vector3 gotPos = GetPos();
+
+                if (gotPos != Vector3.zero)
                 {
-                    hasFoundStartingPoint = true;
+                    enemyPathTransforms.Add(gotPos);
                 }
-                else if(!hasFoundStartingPoint)
+                else
                 {
-                    continue;
-                }
-
-                Tile thisTile = hit.collider.gameObject.GetComponent<Tile>();
-
-                if (thisTile.wasCheckedByPathGenerator)
-                {
-                    xWay = -xWay;
-                }
-
-                Vector3 pos;
-                pos = hit.collider.gameObject.transform.position;
-
-                lastValidPos = pos;
-
-                GameObject thisPath = Instantiate(enemyPath, pos, Quaternion.Euler(0f, rot, 0f));
-                thisPath.transform.SetParent(PathHolder.transform);
-
-                enemyPathTransforms.Add(pos + Vector3.up * (thisTile.info.yOffset + 1));
-
-                thisTile.wasCheckedByPathGenerator = true;
-
-                if (hasFoundStartingPoint && UnityEngine.Random.Range(0,10) > 3)
-                {
-                    new_way:
-
-                    int way = UnityEngine.Random.Range(0, 100);
-
-                    if(way < 20 || zWay != 0)
-                    {
-                        zWay = 0;
-                        xWay = 1;
-                        rot = 180;
-                        
-                    }else if(way < 40)
-                    {
-                        zWay = 0;
-                        xWay = -1;
-                        rot = 0;
-                    }
-                    else
-                    {
-                        zWay = 1;
-                        xWay = 0;
-                        rot = -90;
-                    }
-
-                    if(zWay == previousWay[0] && xWay == previousWay[1])
-                    {
-                        Debug.Log("same direction found!");
-
-                        yield return new WaitForFixedUpdate();
-                        goto new_way;
-                    }
-
-                    previousWay[0] = zWay;
-                    previousWay[1] = xWay;
+                    Debug.LogWarning("nothing found! error?");
                 }
 
-                misses = 0;
-
-                length++;
-                Debug.Log("current path length: " + length);
+                yield return null;
             }
-            else
-            {
-                misses++;
-
-                if (misses >= 100)
-                {
-                    pathTransform.position = lastValidPos + Vector3.forward;
-                    zWay = 1;
-                    xWay = -xWay;
-                    misses = 0;
-                }
-            }
-
-            // Debug.Log("path generator misses: " + misses);
-            yield return new WaitForFixedUpdate();
         }
 
         enemyPathRenderer.RendererSetup(enemyPathTransforms);
-
-        //only for testing!!!!!!!!
-        EnemySpawner.Instance.SpawnEnemies(enemyPathTransforms);
+        EnemySpawner.Instance.SpawnEnemies(enemyPathTransforms); 
     }
+
+    private Vector3 GetPos()
+    {
+        RaycastHit hit;
+    
+        Vector3 origin = pathTransform.position + Vector3.up * 50f; // start high
+        Vector3 halfExtents = new Vector3(0.6f, 0.5f, 0.6f);
+    
+        if (Physics.BoxCast(origin, halfExtents, Vector3.down, out hit, Quaternion.identity, 200f, tileLayer))
+        {
+            return hit.point;
+        }
+    
+        return Vector3.zero;
+    }
+
+    // private IEnumerator CheckPath(PossiblePath path)
+    // {
+    //     GameObject PathHolder = new GameObject("PathHolder");
+
+    //     foreach(Transform t in path.PathPoints)
+    //     {
+    //         while(pathTransform.position != t.position)
+    //         {
+    //             pathTransform.position = Vector3.MoveTowards(
+    //                 pathTransform.position, 
+    //                 t.position,
+    //                 1f * Time.del
+    //             )
+    //         }
+    //     }
+    //     pathTransform.transform.position = 
+    // }
+
+    
+    
+    //OLD VERSION!!!
+
+    // public void Generate()
+    // {
+    //     GameObject[] allChunks = GameObject.FindGameObjectsWithTag("Chunk");
+    //     startChunk = allChunks.ToList().Find(x => x.transform.position.z < 0f);
+
+    //     foreach(Transform t in startChunk.transform)
+    //     {
+    //         Tile tile = t.gameObject.GetComponent<Tile>();
+    //         if(tile != null && (tile.info.x == 0 && tile.info.y == 0))
+    //         {
+    //             startTile = t.gameObject;
+    //             break;
+    //         }
+    //     }
+
+    //     pathTransform.position = startTile.transform.position + (Vector3.up * 5f);
+
+    //     Debug.Log("start tile found!");
+
+    //     StartCoroutine(LayPath());
+    // }
+
+    // private IEnumerator LayPath()
+    // {
+    //     GameObject PathHolder = new GameObject("PathHolder");
+
+    //     int zWay = 0;
+    //     int xWay = 1;
+    //     int rot = 0;
+
+    //     int misses = 0;
+    //     Vector3 lastValidPos = new Vector3();
+
+    //     int length = 0;
+
+    //     List<Vector3> enemyPathTransforms = new List<Vector3>();
+
+    //     RaycastHit hit;
+    //     while (length < minLength)
+    //     {
+
+    //         pathTransform.position += new Vector3(xWay, 0f, zWay);
+
+    //         if(Physics.Raycast(pathTransform.position, Vector3.down, out hit,  999f, tileLayer))
+    //         {
+    //             if(UnityEngine.Random.Range(0, 10) > 6 && !hasFoundStartingPoint)
+    //             {
+    //                 hasFoundStartingPoint = true;
+    //             }
+    //             else if(!hasFoundStartingPoint)
+    //             {
+    //                 continue;
+    //             }
+
+    //             Tile thisTile = hit.collider.gameObject.GetComponent<Tile>();
+
+    //             if (thisTile.wasCheckedByPathGenerator)
+    //             {
+    //                 xWay = -xWay;
+    //             }
+
+    //             Vector3 pos;
+    //             pos = hit.collider.gameObject.transform.position;
+
+    //             lastValidPos = pos;
+
+    //             GameObject thisPath = Instantiate(enemyPath, pos, Quaternion.Euler(0f, rot, 0f));
+    //             thisPath.transform.SetParent(PathHolder.transform);
+
+    //             enemyPathTransforms.Add(pos + Vector3.up * (thisTile.info.yOffset + 1));
+
+    //             thisTile.wasCheckedByPathGenerator = true;
+
+    //             if (hasFoundStartingPoint && UnityEngine.Random.Range(0,10) > 3)
+    //             {
+    //                 new_way:
+
+    //                 int way = UnityEngine.Random.Range(0, 100);
+
+    //                 if(way < 20 || zWay != 0)
+    //                 {
+    //                     zWay = 0;
+    //                     xWay = 1;
+    //                     rot = 180;
+                        
+    //                 }else if(way < 40)
+    //                 {
+    //                     zWay = 0;
+    //                     xWay = -1;
+    //                     rot = 0;
+    //                 }
+    //                 else
+    //                 {
+    //                     zWay = 1;
+    //                     xWay = 0;
+    //                     rot = -90;
+    //                 }
+
+    //                 if(zWay == previousWay[0] && xWay == previousWay[1])
+    //                 {
+    //                     Debug.Log("same direction found!");
+
+    //                     yield return new WaitForFixedUpdate();
+    //                     goto new_way;
+    //                 }
+
+    //                 previousWay[0] = zWay;
+    //                 previousWay[1] = xWay;
+    //             }
+
+    //             misses = 0;
+
+    //             length++;
+    //             Debug.Log("current path length: " + length);
+    //         }
+    //         else
+    //         {
+    //             misses++;
+
+    //             if (misses >= 100)
+    //             {
+    //                 pathTransform.position = lastValidPos + Vector3.forward;
+    //                 zWay = 1;
+    //                 xWay = -xWay;
+    //                 misses = 0;
+    //             }
+    //         }
+
+    //         // Debug.Log("path generator misses: " + misses);
+    //         yield return new WaitForFixedUpdate();
+    //     }
+
+    //     enemyPathRenderer.RendererSetup(enemyPathTransforms);
+
+    //     //only for testing!!!!!!!!
+    //     EnemySpawner.Instance.SpawnEnemies(enemyPathTransforms);
+    // }
+}
+
+[System.Serializable]
+public class PossiblePath
+{
+    public string name;
+    public List<Transform> PathPoints = new List<Transform>();
 }

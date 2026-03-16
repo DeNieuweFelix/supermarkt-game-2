@@ -6,6 +6,9 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 dir;
     public float speed = 10f;
     [SerializeField] private float TimeMoving = 0f;
+    [SerializeField] private float checkRadius = 10f;
+    [SerializeField] private LayerMask TileLayer;
+
     public void Move(InputAction.CallbackContext context)
     {
         Vector2 dir_0 = context.ReadValue<Vector2>();
@@ -17,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(dir != Vector3.zero)
         {
+            if(!CheckMove()) return;
             
             TimeMoving +=  1f * Time.deltaTime;
 
@@ -32,6 +36,21 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             TimeMoving = 0f;
+        }
+    }
+
+    private bool CheckMove()
+    {
+        if(Physics.CheckSphere(transform.position, checkRadius, TileLayer))
+        {
+            return true;
+        }
+        else
+        {
+            // Debug.LogWarning("out of bounds!");
+
+            //RETURN TO FALSE AFTER FIXING !!!
+            return true;
         }
     }
 }

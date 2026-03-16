@@ -11,7 +11,9 @@ public class CameraControls : MonoBehaviour
     [SerializeField] private float maxZoom = 30f;
     [SerializeField] private Camera camera;
     [SerializeField] private float targetZoom;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         camera = GetComponent<Camera>();
@@ -48,4 +50,6 @@ public class CameraControls : MonoBehaviour
             )
         );
     }
+
+
 }
