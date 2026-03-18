@@ -15,10 +15,10 @@ MonoBehaviour:
   name: Mine
   model: {fileID: 9052536863277552976, guid: 3c4c32119a0def6498b7aba0d44b15de, type: 3}
   icon: {fileID: 21300000, guid: 7a8c9de9f88893742bd8c1049034c8f8, type: 3}
-  type: 0
+  type: 1
   materialsProduce:
-  - material: {fileID: 0}
-    amount: 0
-    delay: 0
+  - material: {fileID: 11400000, guid: c7a1a4dd68da2914a9275444a1cedeaf, type: 2}
+    amount: 10
+    delay: 1
   materialsCosts: []
   personCapacity: 0
