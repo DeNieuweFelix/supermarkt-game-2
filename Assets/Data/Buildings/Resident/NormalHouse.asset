@@ -23,5 +23,9 @@ MonoBehaviour:
   - material: {fileID: 0}
     amount: 0
     delay: 0
-  materialsCosts: []
+  materialsCosts:
+  - material: {fileID: 11400000, guid: c7a1a4dd68da2914a9275444a1cedeaf, type: 2}
+    cost: 5
+  - material: {fileID: 11400000, guid: 297a1065fbd382f4e99931d24aa84434, type: 2}
+    cost: 20
   personCapacity: 20
