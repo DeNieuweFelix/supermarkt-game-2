@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class Player : MonoBehaviour
 {
@@ -30,6 +31,19 @@ public class Player : MonoBehaviour
 
         mat.amount += amountAdd;
         Debug.Log("added: " + amountAdd + " to: " + mat.material.name);
+    }
+
+    public void RemoveMaterial(string name, int amountRemove)
+    {
+        MaterialOwned mat = playerStats.MaterialsOwned.Find(x => x.material.name == name);
+        mat.amount -= amountRemove;
+    }
+
+    public int GetMaterial(string name)
+    {
+        MaterialOwned mat = playerStats.MaterialsOwned.Find(x => x.material.name == name);
+
+        return mat.amount;
     }
 
     public void CheatAmount()

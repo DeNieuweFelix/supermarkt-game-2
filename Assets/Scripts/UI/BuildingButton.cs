@@ -14,6 +14,29 @@ public class BuildingButton : MonoBehaviour
 
     public void Build()
     {
+        foreach(MaterialCost mc in building.materialsCosts)
+        {
+            string m = mc.material.name;
+            int c = Player.Instance.GetMaterial(m);
+
+            if(mc.cost > c)
+            {
+                Debug.LogWarning("not enough resources!");
+                return;
+            }
+        }
+
+        Debug.Log("enough resources!");
+
+        foreach(MaterialCost mc in building.materialsCosts)
+        {
+            string m = mc.material.name;
+            
+            Player.Instance.RemoveMaterial(m, mc.cost);
+        }
+
+        Debug.Log("removed resources from player!");     
+
         Tile tileToBuildOn = PlayerTileGetter.Instance.tileSelected;
 
         if (tileToBuildOn.hasBeenBuiltOn)
