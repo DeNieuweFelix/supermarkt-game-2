@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4abe066b1c808f40a6f4f5941be08c7, type: 3}
   m_Name: ManyTextures
   m_EditorClassIdentifier: Assembly-CSharp::CreditEntry
-  name: 
-  image: {fileID: 0}
-  role: 
+  name: ManyTextures
+  image: {fileID: 2800000, guid: 62769e0e1980d6c4284b65816a0afbf3, type: 3}
+  role: Tile Textures

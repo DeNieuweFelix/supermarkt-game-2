@@ -5347,6 +5347,10 @@ MonoBehaviour:
   - 8
   plinkoBall: {fileID: 8966876047315799844, guid: cbf0e19e176d3ec478eac08166305d34, type: 3}
   spawnDelay: 5
+  allEntries:
+  - {fileID: 11400000, guid: cb57be2c5c29ab34c8530cc07610ff2d, type: 2}
+  - {fileID: 11400000, guid: d11269daa1571c541868b66091adbeb7, type: 2}
+  - {fileID: 11400000, guid: 9c512a94f01d82242af509f3fc18cb5e, type: 2}
 --- !u!1 &2079105013
 GameObject:
   m_ObjectHideFlags: 0
