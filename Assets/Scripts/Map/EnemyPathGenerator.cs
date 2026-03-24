@@ -70,7 +70,7 @@ public class EnemyPathGenerator : MonoBehaviour
                 pathTransform.position = Vector3.MoveTowards(
                     pathTransform.position,
                     t.position,
-                    1f
+                    10f
                 );
 
                 Vector3 gotPos = GetPos();

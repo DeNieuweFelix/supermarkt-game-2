@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     public List<Vector3> positions;
     public float speed = 10f;
 
+    public int lifeTime;
+
     public void Setup(List<Vector3> pos)
     {
         positions = pos;
@@ -26,8 +28,10 @@ public class Enemy : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, v, speed * Time.deltaTime);
                 yield return new WaitForFixedUpdate();
+
+                lifeTime++;
             }
-            yield return new WaitForSeconds(0.1f);
+            // yield return new WaitForSeconds(0.1f);
         }
     }
 }

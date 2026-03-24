@@ -21,6 +21,8 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private GameObject testEnemy;
     [SerializeField] private int testAmount = 10;
+
+    public List<Enemy> allEnemies = new List<Enemy>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -46,6 +48,8 @@ public class EnemySpawner : MonoBehaviour
             Enemy eScript = e.GetComponent<Enemy>();
 
             eScript.Setup(posses);
+
+            allEnemies.Add(eScript);
 
             yield return new WaitForSeconds(1f);
         }
