@@ -45,5 +45,7 @@ public class BuildingPreviewManager : MonoBehaviour
         //fix the position and scale (messed some stuff up)
         b.transform.localPosition = Vector3.zero;
         b.transform.localScale = Vector3.one * 0.2f;
+
+        ShowBuildingStats.Instance.Show(building);
     }
 }

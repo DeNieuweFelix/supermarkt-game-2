@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float TimeMoving = 0f;
     [SerializeField] private float checkRadius = 10f;
     [SerializeField] private LayerMask TileLayer;
+
+    [SerializeField] private AudioSource windAudioSource;
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -36,6 +39,26 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             TimeMoving = 0f;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if(dir != Vector3.zero)
+        {
+            float volume = MathF.Round(0.3f + Mathf.Clamp(Mathf.Clamp(TimeMoving, 0f, 10f) / 10, 0f, 0.7f), 2);
+            
+            if(windAudioSource.volume != volume)
+            {
+                windAudioSource.volume = volume;
+            }
+        }
+        else
+        {
+            if(windAudioSource.volume != 0.3f)
+            {
+                windAudioSource.volume = 0.3f;
+            }
         }
     }
 

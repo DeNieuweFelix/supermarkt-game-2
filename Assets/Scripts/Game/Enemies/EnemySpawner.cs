@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -38,6 +39,23 @@ public class EnemySpawner : MonoBehaviour
     public void SpawnEnemies(List<Vector3> posses)
     {
         StartCoroutine(SpawnQueue(posses));
+    }
+
+    public Enemy GetFrontEnemy()
+    {
+        if(allEnemies.Count == 0){
+            Debug.LogWarning("nothing in list ):");
+            return null;
+        }
+
+        Enemy[] listCopy = allEnemies.ToArray();
+
+        Enemy[] orderedList = listCopy.OrderBy(e => e.lifeTime).ToArray();
+
+        Enemy e = orderedList[orderedList.Length - 1];
+        Debug.Log("front enemy found: " + e);
+
+        return e;
     }
 
     private IEnumerator SpawnQueue(List<Vector3> posses)
