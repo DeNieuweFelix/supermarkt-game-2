@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -100,6 +102,8 @@ public class MainResourceUpdater : MonoBehaviour
 
         foreach(MaterialOwned mO in Player.Instance.playerStats.MaterialsOwned)
         {
+            int c = 0;
+
             p_Material m = mO.material;
             ResourceText rT = allResourceText.Find(x => x.name == m.name);
 
@@ -113,8 +117,25 @@ public class ResourceText
 {
     public string name;
     public TextMeshProUGUI textHolder;
+
+    public int oldValue;
     //float just te be sure (make sure to convert it when calling)
     public void UpdateT(float amount){
         textHolder.text = amount.ToString();
+        int newValue = Int32.Parse(textHolder.text);
+
+        if(newValue > oldValue)
+        {
+            textHolder.color = Color.lightGreen;
+        }else if(newValue < oldValue)
+        {
+            textHolder.color = Color.red;
+        }
+        else
+        {
+            textHolder.color = Color.white;
+        }
+
+        oldValue = Int32.Parse(textHolder.text);
     }
 }
