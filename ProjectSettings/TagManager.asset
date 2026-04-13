@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Chunk
   - Tile
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Tile
   - Indicator
-  - 
+  - OffensiveRange
   - 
   - 
   - 

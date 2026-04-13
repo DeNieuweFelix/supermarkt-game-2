@@ -26,6 +26,8 @@ public class PlayerTileGetter : MonoBehaviour
 
     public bool isTileSelected = false;
     public Tile tileSelected;
+
+    private bool isFocussedOnUpgradeableBuilding = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -55,6 +57,14 @@ public class PlayerTileGetter : MonoBehaviour
 
             tileSelected = TileLookingAt;
 
+            byte status = CheckBuild();
+
+            if(status == 0 || status == 1)
+            {
+                isFocussedOnUpgradeableBuilding = false;
+                UpgradeShow.Instance.Hide();
+            }
+
             tileInfoUI.SetInfo(TileLookingAt);
             oldHit = hit;
         }
@@ -63,4 +73,47 @@ public class PlayerTileGetter : MonoBehaviour
             TileGOBlookingAt = null;
         }
     }
+
+    //0 = not on building tile
+    //1 = on building tile, but not  an offensive building tile
+    //2 = on offensive building ti;e
+    private byte CheckBuild()
+    {
+        if(tileSelected.hasBeenBuiltOn == true)
+        {
+            BuildingScript b = tileSelected.gameObject.GetComponentInChildren<BuildingScript>();
+
+            if(b.thisBuilding.type == Building.Types.Offensive)
+            {
+                ShowUpgrades(b.thisBuilding);
+                isFocussedOnUpgradeableBuilding = true;
+                return 2;
+            }
+
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private void ShowUpgrades(Building b)
+    {
+        OffensiveBuilding oB = tileSelected.gameObject.GetComponentInChildren<OffensiveBuilding>();
+        if(oB == null)
+        {
+            Debug.LogError("no offensiveBuilding script found ):");
+            return;
+        }
+        UpgradeInfo u = new UpgradeInfo();
+
+        u.amountOfUpgrades = (byte)oB.upgrades.Count;
+        u.buildingName = b.name;
+        u.currentLevel = oB.upgradeLevel;
+        u.upgradeCost = 9999;
+
+        UpgradeShow.Instance.Show(u);
+    }
+    
 }

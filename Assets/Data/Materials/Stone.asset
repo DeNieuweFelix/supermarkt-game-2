@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Stone
   m_EditorClassIdentifier: Assembly-CSharp::p_Material
   name: Stone
+  sprite: {fileID: -127190193, guid: e319d386b2ad2b1428f2f302ce462ab4, type: 3}
