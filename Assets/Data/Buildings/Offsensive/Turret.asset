@@ -17,5 +17,7 @@ MonoBehaviour:
   icon: {fileID: -930723886, guid: e319d386b2ad2b1428f2f302ce462ab4, type: 3}
   type: 2
   materialsProduce: []
-  materialsCosts: []
+  materialsCosts:
+  - material: {fileID: 11400000, guid: c7a1a4dd68da2914a9275444a1cedeaf, type: 2}
+    cost: 25
   personCapacity: 0

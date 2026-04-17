@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 457ef828b0808b04a932563d6de16790, type: 3}
   m_Name: Lumber thing
   m_EditorClassIdentifier: Assembly-CSharp::Building
-  name: Lumber thing
+  name: Lumber camp
   model: {fileID: 3220348621312394690, guid: 60076a404c69f5f4f9328b17f05a554b, type: 3}
   icon: {fileID: 648263212, guid: e319d386b2ad2b1428f2f302ce462ab4, type: 3}
   type: 1
@@ -25,5 +25,5 @@ MonoBehaviour:
     delay: 1
   materialsCosts:
   - material: {fileID: 11400000, guid: 297a1065fbd382f4e99931d24aa84434, type: 2}
-    cost: 100
+    cost: 50
   personCapacity: 0

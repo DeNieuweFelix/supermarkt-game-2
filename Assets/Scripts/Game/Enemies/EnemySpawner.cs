@@ -21,7 +21,8 @@ public class EnemySpawner : MonoBehaviour
     }
 
     [SerializeField] private GameObject testEnemy;
-    [SerializeField] private int testAmount = 10;
+    [SerializeField] private int testAmount = 50;
+    private List<Vector3> savedPosses;
 
     public List<Enemy> allEnemies = new List<Enemy>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,8 +37,31 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    public void SpawnEnemies(List<Vector3> posses)
+    public void SpawnExternalEnemies()
     {
+        SpawnEnemies(savedPosses);
+    }
+
+    public void SpawnEnemies(List<Vector3> posses = null)
+    {
+        // if (posses == null)
+        // {
+        //     if(savedPosses != null)
+        //     {
+        //         posses = savedPosses;
+        //     }
+        //     else
+        //     {
+        //         Debug.LogError("no posses found!");
+        //         return;
+        //     }
+        // }
+
+        if(savedPosses == null && posses != null)
+        {
+            savedPosses = posses;
+        }
+
         StartCoroutine(SpawnQueue(posses));
     }
 
@@ -60,6 +84,8 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnQueue(List<Vector3> posses)
     {
+        yield return new WaitForSeconds(20f);
+
         for(int i = 0; i < testAmount; i++)
         {
             GameObject e = Instantiate(testEnemy);
@@ -69,7 +95,7 @@ public class EnemySpawner : MonoBehaviour
 
             allEnemies.Add(eScript);
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(5f);
         }
     }
 }

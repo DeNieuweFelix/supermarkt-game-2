@@ -1979,7 +1979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OffensiveBuilding
   fireRate: 1
-  damage: 10
+  damage: 25
   upgradeLevel: 0
   upgrades:
   - {fileID: 4894592581737412975}

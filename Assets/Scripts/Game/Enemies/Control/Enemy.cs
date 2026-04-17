@@ -33,9 +33,14 @@ public class Enemy : MonoBehaviour
 
         transform.position = positions[0];
 
+        health += Mathf.Floor(Random.Range(0f, 200f));
+
         originalHealth = health;
 
+        speed += Random.Range(-1f, 2.5f);
+
         StartCoroutine(EnemyMove());
+        UpdateHealthUI();
     }
 
     private IEnumerator EnemyMove()

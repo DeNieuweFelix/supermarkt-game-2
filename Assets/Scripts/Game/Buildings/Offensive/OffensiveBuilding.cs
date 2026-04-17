@@ -25,6 +25,8 @@ public class OffensiveBuilding : MonoBehaviour
         StartCoroutine(ShootLoop());
 
         ResetTower();
+
+        UpgradeBuilding(Random.Range(0, 4));
     }
 
     private void ResetTower()
@@ -37,6 +39,7 @@ public class OffensiveBuilding : MonoBehaviour
             }
         }
     }
+    
 
     // Update is called once per frame
     void Update()
@@ -56,9 +59,15 @@ public class OffensiveBuilding : MonoBehaviour
         EnemiesInRange.Remove(enemy);
     }
 
-    public void UpgradeBuilding()
+    public void UpgradeBuilding(int level)
     {
-        
+        for(byte i = 0; i < level; i++)
+        {
+            upgrades[i].SetActive(true);
+        }
+
+        damage += 3f * level;
+        fireRate -= 0.075f * level;
     }
 
     private void FindFirstEnemy()
@@ -101,6 +110,12 @@ public class OffensiveBuilding : MonoBehaviour
 
     private void Shoot()
     {
+        if(target == null)
+        {
+            EnemiesInRange.Remove(target);
+            return;
+        }
+
         Vector3 direction = target.transform.position - transform.position;
 
         Quaternion targetRotation = Quaternion.LookRotation(direction);
